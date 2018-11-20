@@ -1,8 +1,14 @@
 package nlp
 
+import breeze.linalg._
+
 case class Corpus(corpus: List[Int], wordToId: Map[String, Int]) {
-  val vocabSize = wordToId.size
+  private val vocabSize = wordToId.size
   val idToWord: Map[Int, String] = wordToId.map(t => t._2 -> t._1)
+
+  def createCoMatrix(windowSize: Int = 1): DenseMatrix[Int] = {
+    DenseMatrix.zeros[Int](vocabSize, vocabSize)
+  }
 }
 
 object Corpus {
