@@ -6,6 +6,7 @@ import nlp.Corpus
 object Hello extends Greeting with App {
   val corpus = Corpus.preprocess("You say goodbye and I say hello.")
   println(corpus)
+  println(corpus.idToWord)
 }
 
 
