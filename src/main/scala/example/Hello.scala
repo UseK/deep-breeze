@@ -5,16 +5,32 @@ import nlp.Corpus
 
 object Hello extends Greeting with App {
   val corpus = Corpus.preprocess("You say goodbye and I say hello.")
-  println(corpus)
-  println(corpus.idToWord)
-  println(corpus.createCoMatrix())
-  println(Corpus.pmi(1, 1, 2, 7))
-  println(Corpus.pmi(10, 1000, 20, 10000))
-  println(Corpus.log2(7))
+  val coMatrix = corpus.createCoMatrix()
+  println(corpus.ppmi(0, 1))
+  println(corpus.ppmi(1, 4))
+}
+
+
+object TestCorpus {
+  def testCorpus = {
+    println(Corpus.pmi(1, 1, 2, 7))
+    println(Corpus.pmi(10, 1000, 20, 10000))
+    println(Corpus.log2(7))
+  }
 }
 
 
 object PracticeBreeze {
+  def getRow(): Unit = {
+    val A = DenseMatrix(
+      (1, 2, 3),
+      (3, 4, 6))
+    println(A(0, ::)) // => Transpose(DenseVector(1, 2, 3))
+    println(A(::,0)) // => DenseVector(1, 3)
+    println(sum(A(0, ::))) // => 6(1 + 2 + 3)
+    println(sum(A(::, 0))) // => 4(1 + 3)
+  }
+
   def broadcast(): Unit = {
     val A = DenseMatrix(
       (1, 2, 3),

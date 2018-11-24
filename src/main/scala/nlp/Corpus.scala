@@ -9,6 +9,7 @@ case class Corpus(corpus: List[Int], wordToId: Map[String, Int]) {
     Map[Int, List[Int]]()) {(m, t) =>
     m.updated(t._1, t._2 :: m.getOrElse(t._1, List()))
   }
+  val coMatrix = createCoMatrix()
 
   def createCoMatrix(windowSize: Int = 1): DenseMatrix[Int] = {
     val matrix = DenseMatrix.zeros[Int](vocabSize, vocabSize)
@@ -26,6 +27,26 @@ case class Corpus(corpus: List[Int], wordToId: Map[String, Int]) {
       }
     }
     matrix
+  }
+
+  def createPPMIMatrix() = {
+    for (i <- Range(0, vocabSize)) {
+      for (j <- Range(0, vocabSize)) {
+        printf("%.2f, ", ppmi(i, j))
+      }
+      println()
+    }
+  }
+
+  def ppmi(i: Int, j: Int) = {
+    val xOccurrence = id2NOccurrence(i)
+    val yOccurrence = id2NOccurrence(j)
+    val co = coMatrix(i, j)
+    Corpus.ppmi(co, xOccurrence, yOccurrence, vocabSize)
+  }
+
+  def id2NOccurrence(id: Int): Int = {
+    idToCorpusIndices(id).size
   }
 }
 
@@ -53,6 +74,10 @@ object Corpus {
 
   val eps: Double = Double.MinPositiveValue
 
+  def ppmi(xy: Int, x: Int, y:Int, N: Int): Double = {
+    Math.max(0.0, pmi(xy, x, y, N))
+  }
+
   /**
     * PointWise Mutual Information
     * @param xy Number of Co-occurrence
@@ -62,7 +87,10 @@ object Corpus {
     * @return
     */
   def pmi(xy: Int, x: Int, y:Int, N: Int): Double = {
-    log2((xy * N) / (x * y))
+    val antilogarithm = (xy * N) / (x * y + eps)
+    println(xy, x, y, N)
+    println(antilogarithm)
+    log2(antilogarithm)
   }
 
   val lnOf2: Double = Math.log(2)
