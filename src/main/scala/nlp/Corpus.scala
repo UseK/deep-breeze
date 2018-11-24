@@ -50,4 +50,23 @@ object Corpus {
     }
     wordToId
   }
+
+  val eps: Double = Double.MinPositiveValue
+
+  /**
+    * PointWise Mutual Information
+    * @param xy Number of Co-occurrence
+    * @param x Number of x occurrence
+    * @param y Number of y occurrence
+    * @param N Number of courpus
+    * @return
+    */
+  def pmi(xy: Int, x: Int, y:Int, N: Int): Double = {
+    log2((xy * N) / (x * y))
+  }
+
+  val lnOf2: Double = Math.log(2)
+  def log2(x: Double): Double = {
+    Math.log(x) / lnOf2
+  }
 }

@@ -8,6 +8,9 @@ object Hello extends Greeting with App {
   println(corpus)
   println(corpus.idToWord)
   println(corpus.createCoMatrix())
+  println(Corpus.pmi(1, 1, 2, 7))
+  println(Corpus.pmi(10, 1000, 20, 10000))
+  println(Corpus.log2(7))
 }
 
 
