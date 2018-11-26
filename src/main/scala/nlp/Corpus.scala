@@ -32,21 +32,23 @@ case class Corpus(corpus: List[Int], wordToId: Map[String, Int]) {
   def createPPMIMatrix() = {
     for (i <- Range(0, vocabSize)) {
       for (j <- Range(0, vocabSize)) {
-        printf("%.2f, ", ppmi(i, j))
+        printf("%.3f, ", ppmi(i, j))
       }
       println()
     }
   }
 
+  val N = sum(coMatrix)
+
   def ppmi(i: Int, j: Int) = {
     val xOccurrence = id2NOccurrence(i)
     val yOccurrence = id2NOccurrence(j)
     val co = coMatrix(i, j)
-    Corpus.ppmi(co, xOccurrence, yOccurrence, vocabSize)
+    Corpus.ppmi(co, xOccurrence, yOccurrence, N)
   }
 
   def id2NOccurrence(id: Int): Int = {
-    idToCorpusIndices(id).size
+    sum(coMatrix(id, ::))
   }
 }
 
@@ -88,8 +90,6 @@ object Corpus {
     */
   def pmi(xy: Int, x: Int, y:Int, N: Int): Double = {
     val antilogarithm = (xy * N) / (x * y + eps)
-    println(xy, x, y, N)
-    println(antilogarithm)
     log2(antilogarithm)
   }
 
