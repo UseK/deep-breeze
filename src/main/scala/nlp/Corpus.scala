@@ -29,13 +29,12 @@ case class Corpus(corpus: List[Int], wordToId: Map[String, Int]) {
     matrix
   }
 
-  def createPPMIMatrix() = {
-    for (i <- Range(0, vocabSize)) {
-      for (j <- Range(0, vocabSize)) {
-        printf("%.3f, ", ppmi(i, j))
-      }
-      println()
-    }
+  def createPPMIMatrix(): DenseMatrix[Double] = {
+    DenseMatrix(
+      Range(0, vocabSize).toList.map { i =>
+        Range(0, vocabSize).toList.map(j => ppmi(i, j))
+      }: _*
+    )
   }
 
   val N = sum(coMatrix)
