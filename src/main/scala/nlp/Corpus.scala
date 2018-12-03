@@ -52,6 +52,16 @@ case class Corpus(corpus: List[Int], wordToId: Map[String, Int]) {
 }
 
 object Corpus {
+  def showSVD(matrix: DenseMatrix[Double]) = {
+    //val s, v, d = svd(matrix)
+    println(svd(matrix))
+    //println(s)
+    //println()
+    //println(v)
+    //println()
+    //println(d)
+  }
+
   def preprocess(text: String): Corpus = {
     val lowered = text.toLowerCase
     val replaced = lowered.replace(".", " .")
