@@ -1,6 +1,7 @@
 package nlp
 
 import breeze.linalg._
+import breeze.linalg.functions.cosineDistance
 
 case class Corpus(corpus: List[Int], wordToId: Map[String, Int]) {
   private val vocabSize = wordToId.size

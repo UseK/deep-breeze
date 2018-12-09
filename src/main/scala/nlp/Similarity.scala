@@ -1,0 +1,5 @@
+package nlp
+
+object Similarity {
+
+}
