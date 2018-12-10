@@ -7,6 +7,8 @@ object Hello extends Greeting with App {
   val corpus = Corpus.preprocess("You say goodbye and I say hello.")
   val coMatrix = corpus.createCoMatrix()
   println(Corpus.showSVD(corpus.createPPMIMatrix()))
+
+  println(PracticeBreeze.broadcast())
 }
 
 
