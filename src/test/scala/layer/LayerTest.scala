@@ -9,8 +9,8 @@ class SigmoidTest extends FunSuite {
   val sigmoid = Sigmoid()
 
   test("calculate") {
-    assertAround(sigmoid.calculate(0.0),0.5)
-    assertAround(sigmoid.calculate(1.0),0.731)
+    assertAround(sigmoid.forwardCalculate(0.0),0.5)
+    assertAround(sigmoid.forwardCalculate(1.0),0.731)
   }
 
   test("forward") {
@@ -23,6 +23,18 @@ class SigmoidTest extends FunSuite {
       (0.9820137900379085, 0.9933071490757153, 0.9975273768433653)
     )
     assert(result == expected)
+  }
+
+  test("backward") {
+    val grad = 0.0001
+    val dx = sigmoid.backward(
+      DenseMatrix(
+        (grad, grad, grad),
+        (grad, grad, grad),
+      )
+    )
+    assert(dx.data(0) > dx.data(1))
+    assert(dx.data(4) > dx.data(5))
   }
 
   def assertAround(result: T, expected: T): Unit = {
