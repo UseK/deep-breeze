@@ -19,7 +19,7 @@ class SigmoidTest extends FunSuite {
       (4.0, 5.0, 6.0)
     ))
     val expected = DenseMatrix(
-      (0.7310585786300049, 0.8807970779778823,  0.9525741268224334),
+      (0.7310585786300049, 0.8807970779778823, 0.9525741268224334),
       (0.9820137900379085, 0.9933071490757153, 0.9975273768433653)
     )
     assert(result == expected)
@@ -30,3 +30,32 @@ class SigmoidTest extends FunSuite {
     assert(result >= expected - eps)
   }
 }
+
+class AffineTest extends FunSuite {
+  test("forward") {
+    val src = DenseMatrix(
+      (1.0, 2.0, 3.0, 4.0),
+      (5.0, 6.0, 7.0, 8.0),
+    )
+    val affine = new Affine(
+      w = DenseMatrix(
+        (1.0, 2.0, 10.0, 10.0),
+        (3.0, 4.0, 10.0, 10.0),
+        (5.0, 6.0, 10.0, 10.0),
+        (7.0, 8.0, 10.0, 10.0),
+      ),
+      b = DenseMatrix(
+        (100.0, 200.0, 300.0, 400.0),
+        (500.0, 600.0, 700.0, 800.9),
+      )
+    )
+
+    val result = affine.forward(src)
+    val expected = DenseMatrix(
+      (150.0, 260.0, 400.0, 500.0),
+      (614.0, 740.0, 960.0, 1060.9)
+    )
+    assert(result == expected)
+  }
+}
+
