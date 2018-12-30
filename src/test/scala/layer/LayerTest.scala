@@ -71,19 +71,39 @@ class AffineTest extends FunSuite {
   }
 }
 
-class SoftmaxTest extends FunSuite {
-  test("softmax") {
+class SoftmaxWithCrossEntropyErrorTest extends FunSuite {
+  test("softmaxForward") {
     val inputMatrix = DenseMatrix(
       (0.1, 0.2, 0.3, 0.4),
       (0.9, 0.8, 0.7, 0.6),
     )
-    val softmax = new Softmax()
-    val result = softmax.forward(inputMatrix)
+    val softmax = new SoftmaxWithCrossEntropyError()
+    val result = softmax.softmaxForward(inputMatrix)
     val expected = DenseMatrix(
       (0.21383822036598443,  0.23632778232153764,
         0.26118259215507555,  0.28865140515740234),
       (0.28865140515740234,  0.2611825921550756,
         0.23632778232153764,  0.21383822036598443)
+    )
+    assert(result == expected)
+  }
+
+  test("crossEntropyErrorForward") {
+    val inputMatrix = DenseMatrix(
+      (0.21383822036598443,  0.23632778232153764,
+        0.26118259215507555,  0.28865140515740234),
+      (0.28865140515740234,  0.2611825921550756,
+        0.23632778232153764,  0.21383822036598443)
+    )
+    val correctSet = DenseMatrix(
+      (1.0, 0.0, 0.0, 0.0),
+      (1.0, 0.0, 0.0, 0.0),
+    )
+    val softmax = new SoftmaxWithCrossEntropyError()
+    val result = softmax.crossEntropyErrorForward(inputMatrix, correctSet)
+    val expected = DenseMatrix(
+      (0.7712677647275814),
+      (0.6212677647275814),
     )
     assert(result == expected)
   }

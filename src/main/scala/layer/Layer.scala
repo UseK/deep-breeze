@@ -2,7 +2,7 @@ package layer
 
 import breeze.linalg.DenseMatrix
 import breeze.linalg._
-import breeze.numerics.exp
+import breeze.numerics.{exp, log}
 
 
 trait Layer {
@@ -55,17 +55,31 @@ object Affine {
   }
 }
 
-class Softmax extends Layer {
-  override def forward(x: DenseMatrix[T]): DenseMatrix[T] = {
-    val softmaxMapped = (0 until x.rows).map{ i =>
-      softmax(x(i, ::).t)
-    }
-    DenseMatrix(softmaxMapped:_*)
+class SoftmaxWithCrossEntropyError {
+  type T = Double
+  def forward(x: DenseMatrix[T], t: DenseMatrix[T]): DenseMatrix[T] = {
+    crossEntropyErrorForward(softmaxForward(x), t)
   }
 
-  override def backward(dOut: DenseMatrix[T]): DenseMatrix[T] = {
-    // TODO Not Yet Implemented
-    dOut
+  def softmaxForward(x: DenseMatrix[T]): DenseMatrix[T] = {
+    val softmaxMapped = (0 until x.rows).map { i =>
+      softmax(x(i, ::).t)
+    }
+    DenseMatrix(softmaxMapped: _*)
+  }
+
+  def crossEntropyErrorForward(x: DenseMatrix[T],
+                               t: DenseMatrix[T]): DenseMatrix[T] = {
+    val ceeMapped = (0 until x.rows).map { i =>
+      val sumOfCEE = crossEntropyError(x(i, ::).t, t(i, ::).t)
+      sumOfCEE / t.rows
+    }
+    DenseMatrix(ceeMapped: _*)
+  }
+
+  def crossEntropyError(x: DenseVector[T],
+                        t: DenseVector[T]): T = {
+    -sum(t *:* log(x))
   }
 
   def softmax(row: DenseVector[T]): DenseVector[T] = {
@@ -73,3 +87,4 @@ class Softmax extends Layer {
     cMinusEx / sum(cMinusEx)
   }
 }
+
