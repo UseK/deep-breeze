@@ -2,6 +2,7 @@ package layer
 
 import breeze.linalg.DenseMatrix
 import breeze.linalg._
+import breeze.numerics.exp
 
 
 trait Layer {
@@ -40,7 +41,7 @@ class Affine(w: DenseMatrix[Double], b: DenseMatrix[Double]) extends Layer {
   }
 
   override def backward(dOut: DenseMatrix[T]): DenseMatrix[T] = {
-    // Not Yet Implemented
+    // TODO Not Yet Implemented
     dOut
   }
 }
@@ -51,5 +52,24 @@ object Affine {
       DenseMatrix.ones[Double](nVec, nVec),
       DenseMatrix.zeros[Double](nSample, nVec)
     )
+  }
+}
+
+class Softmax extends Layer {
+  override def forward(x: DenseMatrix[T]): DenseMatrix[T] = {
+    val softmaxMapped = (0 until x.rows).map{ i =>
+      softmax(x(i, ::).t)
+    }
+    DenseMatrix(softmaxMapped:_*)
+  }
+
+  override def backward(dOut: DenseMatrix[T]): DenseMatrix[T] = {
+    // TODO Not Yet Implemented
+    dOut
+  }
+
+  def softmax(row: DenseVector[T]): DenseVector[T] = {
+    val cMinusEx = exp(row - max(row))
+    cMinusEx / sum(cMinusEx)
   }
 }

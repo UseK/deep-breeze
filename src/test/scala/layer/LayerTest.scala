@@ -71,3 +71,21 @@ class AffineTest extends FunSuite {
   }
 }
 
+class SoftmaxTest extends FunSuite {
+  test("softmax") {
+    val inputMatrix = DenseMatrix(
+      (0.1, 0.2, 0.3, 0.4),
+      (0.9, 0.8, 0.7, 0.6),
+    )
+    val softmax = new Softmax()
+    val result = softmax.forward(inputMatrix)
+    val expected = DenseMatrix(
+      (0.21383822036598443,  0.23632778232153764,
+        0.26118259215507555,  0.28865140515740234),
+      (0.28865140515740234,  0.2611825921550756,
+        0.23632778232153764,  0.21383822036598443)
+    )
+    assert(result == expected)
+  }
+}
+
