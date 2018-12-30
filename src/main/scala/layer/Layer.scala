@@ -44,3 +44,12 @@ class Affine(w: DenseMatrix[Double], b: DenseMatrix[Double]) extends Layer {
     dOut
   }
 }
+
+object Affine {
+  def initByOne(nVec: Int, nSample: Int): Affine = {
+    new Affine(
+      DenseMatrix.ones[Double](nVec, nVec),
+      DenseMatrix.zeros[Double](nSample, nVec)
+    )
+  }
+}
