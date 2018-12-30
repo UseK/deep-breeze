@@ -29,4 +29,11 @@ class MultiLayerNetworkTest extends FunSuite {
     )
     assert(result == expected)
   }
+  test("numerical gradient") {
+    val correctLabel = DenseMatrix(
+      (0.01, 0.04, 0.09, 0.16),
+      (0.81, 0.64, 0.49, 0.36),
+    )
+    val affineSigmoid = MultiLayerNetwork.affineSigmoid(4, 2)
+  }
 }
