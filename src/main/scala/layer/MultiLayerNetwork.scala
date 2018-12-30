@@ -8,3 +8,17 @@ class MultiLayerNetwork(val layers: List[Layer]) {
     layers.foldLeft(x)((forwarded, layer) => layer.forward(forwarded))
   }
 }
+
+object MultiLayerNetwork {
+  def affineOnly(nVec: Int, nSample: Int): MultiLayerNetwork = {
+    new MultiLayerNetwork(
+      List(Affine.initByOne(nVec, nSample))
+    )
+  }
+
+  def affineSigmoid(nVec: Int, nSample: Int): MultiLayerNetwork = {
+    new MultiLayerNetwork(
+      List(Affine.initByOne(nVec, nSample), Sigmoid())
+    )
+  }
+}
