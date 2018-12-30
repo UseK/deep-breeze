@@ -9,14 +9,15 @@ trait Layer {
   type T = Double
   def forward(x: DenseMatrix[T]): DenseMatrix[T]
   def backward(dOut: DenseMatrix[T]): DenseMatrix[T]
+  def showParams()
 }
 
 
 class Sigmoid extends  Layer {
-  var out: Option[DenseMatrix[T]] = None
+  var outCache: Option[DenseMatrix[T]] = None
   override def forward(x: DenseMatrix[T]): DenseMatrix[T] = {
     val forwarded = x.map(forwardCalculate)
-    out = Option(forwarded)
+    outCache = Option(forwarded)
     forwarded
   }
 
@@ -26,8 +27,10 @@ class Sigmoid extends  Layer {
   }
 
   override def backward(dOut: DenseMatrix[T]): DenseMatrix[T] = {
-    dOut *:* (1.0 - out.get) *:* out.get
+    dOut *:* (1.0 - outCache.get) *:* outCache.get
   }
+
+  override def showParams(): Unit = {}
 }
 object Sigmoid {
   def apply(): Sigmoid = new Sigmoid()
@@ -44,6 +47,11 @@ class Affine(w: DenseMatrix[Double], b: DenseMatrix[Double]) extends Layer {
     // TODO Not Yet Implemented
     dOut
   }
+
+  override def showParams(): Unit = {
+    println(w)
+    println(b)
+  }
 }
 
 object Affine {
@@ -56,9 +64,19 @@ object Affine {
 }
 
 class SoftmaxWithCrossEntropyError {
+  var softmaxForwardCache: Option[DenseMatrix[T]] = None
+  var tCache: Option[DenseMatrix[T]] = None
+
   type T = Double
   def forward(x: DenseMatrix[T], t: DenseMatrix[T]): DenseMatrix[T] = {
-    crossEntropyErrorForward(softmaxForward(x), t)
+    tCache = Option(t)
+    val forwarded = softmaxForward(x)
+    softmaxForwardCache = Option(forwarded)
+    crossEntropyErrorForward(forwarded, t)
+  }
+
+  def backward(): DenseMatrix[T] = {
+    (softmaxForwardCache.get - tCache.get).map(v => v / tCache.get.rows)
   }
 
   def softmaxForward(x: DenseMatrix[T]): DenseMatrix[T] = {
