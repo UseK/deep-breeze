@@ -3,7 +3,12 @@ package layer
 import breeze.linalg.DenseMatrix
 
 class MultiLayerNetwork(val layers: List[Layer]) {
+  val lossFunction = new SoftmaxWithCrossEntropyError()
   type T = Double
+  def loss(x: DenseMatrix[T], t: DenseMatrix[T]): DenseMatrix[T] = {
+    val predicted = predict(x)
+    lossFunction.forward(predicted, t)
+  }
   def predict(x: DenseMatrix[T]): DenseMatrix[T] = {
     layers.foldLeft(x)((forwarded, layer) => layer.forward(forwarded))
   }
