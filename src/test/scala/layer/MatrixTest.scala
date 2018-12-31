@@ -4,11 +4,11 @@ import breeze.linalg._
 import org.scalatest.FunSuite
 
 class MatrixTest extends FunSuite {
+  val mat = DenseMatrix(
+    (1.0, 2.0, 3.0),
+    (4.0, 5.0, 6.0),
+  )
   test("broadcast") {
-    val mat = DenseMatrix(
-      (1.0, 2.0, 3.0),
-      (4.0, 5.0, 6.0),
-    )
     val bias = DenseVector(100.0, 200.0, 300.0)
     val result = mat(*, ::) + bias
     val expected = DenseMatrix(
@@ -16,5 +16,9 @@ class MatrixTest extends FunSuite {
       (104.0, 205.0, 306.0),
     )
     assert(result == expected)
+  }
+
+  test("sum") {
+    assert(sum(mat(::, *)).t == DenseVector(5.0, 7.0, 9.0))
   }
 }

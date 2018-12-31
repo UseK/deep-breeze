@@ -14,11 +14,8 @@ class MultiLayerNetwork(val layers: List[Layer]) {
   }
   def backward(): Unit = {
     var dOut = lossFunction.backward()
-    println(dOut)
     layers.reverse.foreach { layer =>
       dOut = layer.backward(dOut)
-      println(dOut)
-      println()
     }
   }
 }

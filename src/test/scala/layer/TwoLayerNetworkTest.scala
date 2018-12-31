@@ -16,7 +16,6 @@ class TwoLayerNetworkTest extends FunSuite {
   test("backward") {
     val net = MultiLayerNetwork.twoLayerNetwork(4, 2)
     net.loss(x, t)
-    net.layers(0).showParams()
     net.backward()
   }
 }

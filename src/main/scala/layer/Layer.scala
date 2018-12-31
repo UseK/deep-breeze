@@ -39,6 +39,8 @@ object Sigmoid {
 
 class Affine(w: DenseMatrix[Double], b: DenseVector[Double]) extends Layer {
   var xCache: Option[DenseMatrix[T]] = None
+  var diffW: Option[DenseMatrix[T]] = None
+  var diffB: Option[DenseVector[T]] = None
   override def forward(x: DenseMatrix[T]): DenseMatrix[T] = {
     xCache = Option(x)
     val dotted = (x * w)
@@ -46,8 +48,9 @@ class Affine(w: DenseMatrix[Double], b: DenseVector[Double]) extends Layer {
   }
 
   override def backward(dOut: DenseMatrix[T]): DenseMatrix[T] = {
-    // TODO Not Yet Implemented
-    dOut
+    diffW = Option(xCache.get.t * dOut)
+    diffB = Option(sum(dOut(::, *)).t)
+    dOut * w.t
   }
 
   override def showParams(): Unit = {
