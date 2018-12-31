@@ -24,6 +24,16 @@ class MultiLayerNetwork(val layers: List[Layer]) {
       case _ => Unit
     }
   }
+  def learn(x: DenseMatrix[Double],
+            t: DenseMatrix[Double],
+            nIter: Int,
+            learningRate: Double): Unit = {
+    (1 to nIter).foreach { _ =>
+      loss(x, t)
+      backward()
+      updateParams(learningRate)
+    }
+  }
 }
 
 object MultiLayerNetwork {
