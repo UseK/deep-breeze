@@ -37,10 +37,12 @@ object Sigmoid {
 }
 
 
-class Affine(w: DenseMatrix[Double], b: DenseMatrix[Double]) extends Layer {
+class Affine(w: DenseMatrix[Double], b: DenseVector[Double]) extends Layer {
+  var xCache: Option[DenseMatrix[T]] = None
   override def forward(x: DenseMatrix[T]): DenseMatrix[T] = {
+    xCache = Option(x)
     val dotted = (x * w)
-    dotted+ b
+    dotted(*, ::) + b
   }
 
   override def backward(dOut: DenseMatrix[T]): DenseMatrix[T] = {
@@ -53,15 +55,15 @@ class Affine(w: DenseMatrix[Double], b: DenseMatrix[Double]) extends Layer {
     println(b)
   }
 }
-
 object Affine {
   def initByOne(nVec: Int, nSample: Int): Affine = {
     new Affine(
       DenseMatrix.ones[Double](nVec, nVec),
-      DenseMatrix.zeros[Double](nSample, nVec)
+      DenseVector.zeros[Double](nVec)
     )
   }
 }
+
 
 class SoftmaxWithCrossEntropyError {
   var softmaxForwardCache: Option[DenseMatrix[T]] = None

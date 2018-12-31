@@ -1,6 +1,6 @@
 package layer
 
-import breeze.linalg.DenseMatrix
+import breeze.linalg.{DenseMatrix, DenseVector}
 import org.scalatest.FunSuite
 
 class SigmoidTest extends FunSuite {
@@ -56,16 +56,13 @@ class AffineTest extends FunSuite {
         (5.0, 6.0, 10.0, 10.0),
         (7.0, 8.0, 10.0, 10.0),
       ),
-      b = DenseMatrix(
-        (100.0, 200.0, 300.0, 400.0),
-        (500.0, 600.0, 700.0, 800.9),
-      )
+      b = DenseVector(100.0, 200.0, 300.0, 400.0)
     )
 
     val result = affine.forward(src)
     val expected = DenseMatrix(
       (150.0, 260.0, 400.0, 500.0),
-      (614.0, 740.0, 960.0, 1060.9)
+      (214.0, 340.0, 560.0, 660.0)
     )
     assert(result == expected)
   }
