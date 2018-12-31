@@ -12,6 +12,11 @@ trait Layer {
   def showParams()
 }
 
+trait ParamUpdatable {
+  def updateParams(learningRate: Double): Unit
+}
+
+
 
 class Sigmoid extends  Layer {
   var outCache: Option[DenseMatrix[T]] = None
@@ -37,7 +42,8 @@ object Sigmoid {
 }
 
 
-class Affine(w: DenseMatrix[Double], b: DenseVector[Double]) extends Layer {
+class Affine(var w: DenseMatrix[Double],
+             var b: DenseVector[Double]) extends Layer with ParamUpdatable {
   var xCache: Option[DenseMatrix[T]] = None
   var diffW: Option[DenseMatrix[T]] = None
   var diffB: Option[DenseVector[T]] = None
@@ -56,6 +62,11 @@ class Affine(w: DenseMatrix[Double], b: DenseVector[Double]) extends Layer {
   override def showParams(): Unit = {
     println(w)
     println(b)
+  }
+
+  override def updateParams(learningRate: T): Unit = {
+    w -= diffW.get *:* learningRate
+    b -= diffB.get *:* learningRate
   }
 }
 object Affine {

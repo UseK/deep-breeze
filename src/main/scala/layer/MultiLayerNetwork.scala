@@ -18,6 +18,12 @@ class MultiLayerNetwork(val layers: List[Layer]) {
       dOut = layer.backward(dOut)
     }
   }
+  def updateParams(learningRate: Double): Unit = {
+    layers.foreach {
+      case l: ParamUpdatable => l.updateParams(learningRate)
+      case _ => Unit
+    }
+  }
 }
 
 object MultiLayerNetwork {

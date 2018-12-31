@@ -21,4 +21,13 @@ class MatrixTest extends FunSuite {
   test("sum") {
     assert(sum(mat(::, *)).t == DenseVector(5.0, 7.0, 9.0))
   }
+
+  test("broadcast mult") {
+    val multed = mat *:* 0.1
+    assert(multed == DenseMatrix(
+      (0.1, 0.2, 0.30000000000000004),
+      (0.4, 0.5, 0.6000000000000001),
+    )
+    )
+  }
 }

@@ -1,6 +1,6 @@
 package layer
 
-import breeze.linalg.DenseMatrix
+import breeze.linalg.{DenseMatrix, sum}
 import org.scalatest.FunSuite
 
 class TwoLayerNetworkTest extends FunSuite {
@@ -15,7 +15,18 @@ class TwoLayerNetworkTest extends FunSuite {
 
   test("backward") {
     val net = MultiLayerNetwork.twoLayerNetwork(4, 2)
-    net.loss(x, t)
+
+    val firstLoss = net.loss(x, t)
     net.backward()
+    net.updateParams(0.1)
+
+    val secondLoss = net.loss(x, t)
+    net.backward()
+    net.updateParams(0.1)
+
+    val thirdLoss = net.loss(x, t)
+    assert(sum(firstLoss) > sum(secondLoss))
+    assert(sum(secondLoss) > sum(thirdLoss))
+
   }
 }
