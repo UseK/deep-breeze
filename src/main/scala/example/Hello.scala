@@ -1,14 +1,11 @@
 package example
 
 import breeze.linalg._
+import ken.Converter
 import nlp.Corpus
 
 object Hello extends Greeting with App {
-  val corpus = Corpus.preprocess("You say goodbye and I say hello.")
-  val coMatrix = corpus.createCoMatrix()
-  println(Corpus.showSVD(corpus.createPPMIMatrix()))
-
-  println(PracticeBreeze.broadcast())
+  Converter.run()
 }
 
 
@@ -18,6 +15,14 @@ object TestCorpus {
     println(Corpus.pmi(10, 1000, 20, 10000))
     println(Corpus.log2(7))
   }
+  def trySVD = {
+    val corpus = Corpus.preprocess("You say goodbye and I say hello.")
+    val coMatrix = corpus.createCoMatrix()
+    println(Corpus.showSVD(corpus.createPPMIMatrix()))
+
+    println(PracticeBreeze.broadcast())
+  }
+
 }
 
 

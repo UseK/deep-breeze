@@ -28,3 +28,6 @@ libraryDependencies  ++= Seq(
 
 
 resolvers += "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/"
+
+libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "1.3.5"
+
