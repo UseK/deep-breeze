@@ -99,8 +99,8 @@ class SoftmaxWithCrossEntropyErrorTest extends FunSuite {
     val softmax = new SoftmaxWithCrossEntropyError()
     val result = softmax.crossEntropyErrorForward(inputMatrix, correctSet)
     val expected = DenseMatrix(
-      (0.7712677647275814),
-      (0.6212677647275814),
+      0.7712677647275814,
+      0.6212677647275814,
     )
     assert(result == expected)
   }

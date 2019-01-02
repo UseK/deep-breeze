@@ -17,7 +17,6 @@ trait ParamUpdatable {
 }
 
 
-
 class Sigmoid extends  Layer {
   var outCache: Option[DenseMatrix[T]] = None
   override def forward(x: DenseMatrix[T]): DenseMatrix[T] = {
@@ -25,7 +24,6 @@ class Sigmoid extends  Layer {
     outCache = Option(forwarded)
     forwarded
   }
-
 
   def forwardCalculate(x: T): T = {
     1.0 / (1.0 + Math.exp(-x))
@@ -49,7 +47,7 @@ class Affine(var w: DenseMatrix[Double],
   var diffB: Option[DenseVector[T]] = None
   override def forward(x: DenseMatrix[T]): DenseMatrix[T] = {
     xCache = Option(x)
-    val dotted = (x * w)
+    val dotted = x * w
     dotted(*, ::) + b
   }
 
@@ -69,6 +67,7 @@ class Affine(var w: DenseMatrix[Double],
     b -= diffB.get *:* learningRate
   }
 }
+
 object Affine {
   def initByOne(nVec: Int, nSample: Int): Affine = {
     new Affine(

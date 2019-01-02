@@ -4,7 +4,7 @@ import breeze.linalg._
 import org.scalatest.FunSuite
 
 class MatrixTest extends FunSuite {
-  val mat = DenseMatrix(
+  private val mat = DenseMatrix(
     (1.0, 2.0, 3.0),
     (4.0, 5.0, 6.0),
   )
@@ -23,8 +23,7 @@ class MatrixTest extends FunSuite {
   }
 
   test("broadcast mult") {
-    val multed = mat *:* 0.1
-    assert(multed == DenseMatrix(
+    assert(mat *:* 0.1 == DenseMatrix(
       (0.1, 0.2, 0.30000000000000004),
       (0.4, 0.5, 0.6000000000000001),
     )
