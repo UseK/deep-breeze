@@ -1,6 +1,6 @@
 package layer
 
-import breeze.linalg.DenseMatrix
+import breeze.linalg.{DenseMatrix, max, min, sum}
 
 class MultiLayerNetwork(val layers: List[Layer]) {
   val lossFunction = new SoftmaxWithCrossEntropyError()
@@ -28,8 +28,13 @@ class MultiLayerNetwork(val layers: List[Layer]) {
             t: DenseMatrix[Double],
             nIter: Int,
             learningRate: Double): Unit = {
-    (1 to nIter).foreach { _ =>
-      loss(x, t)
+    (1 to nIter).foreach { i =>
+      println(i)
+      val ls = loss(x, t)
+      println(sum(ls))
+      println(max(ls))
+      println(min(ls))
+      println()
       backward()
       updateParams(learningRate)
     }
