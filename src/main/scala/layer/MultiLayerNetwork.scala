@@ -27,14 +27,18 @@ class MultiLayerNetwork(val layers: List[Layer]) {
   def learn(x: DenseMatrix[Double],
             t: DenseMatrix[Double],
             nIter: Int,
-            learningRate: Double): Unit = {
+            learningRate: Double,
+            isShowProgress: Boolean=false,
+           ): Unit = {
     (1 to nIter).foreach { i =>
-      println(i)
       val ls = loss(x, t)
-      println(sum(ls))
-      println(max(ls))
-      println(min(ls))
-      println()
+      if (isShowProgress) {
+        println(i)
+        println(sum(ls))
+        println(max(ls))
+        println(min(ls))
+        println()
+      }
       backward()
       updateParams(learningRate)
     }

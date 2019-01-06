@@ -27,7 +27,7 @@ object Converter {
     println(nVec)
     println(encoder.characters.length)
     val net = MultiLayerNetwork.twoLayerNetwork(nVec)
-    net.learn(x, t, 10000, 0.000005)
+    net.learn(x, t, 10000, 0.000005, isShowProgress=true)
   }
 
   private def readIntoLines(pathName: String) = {
