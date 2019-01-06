@@ -42,24 +42,24 @@ class MultiLayerNetwork(val layers: List[Layer]) {
 }
 
 object MultiLayerNetwork {
-  def affineOnly(nVec: Int, nSample: Int): MultiLayerNetwork = {
+  def affineOnly(nVec: Int): MultiLayerNetwork = {
     new MultiLayerNetwork(
-      List(Affine.initByOne(nVec, nSample))
+      List(Affine.initByOne(nVec))
     )
   }
 
-  def affineSigmoid(nVec: Int, nSample: Int): MultiLayerNetwork = {
+  def affineSigmoid(nVec: Int): MultiLayerNetwork = {
     new MultiLayerNetwork(
-      List(Affine.initByOne(nVec, nSample), Sigmoid())
+      List(Affine.initByOne(nVec), Sigmoid())
     )
   }
 
-  def twoLayerNetwork(nVec: Int, nSample: Int): MultiLayerNetwork = {
+  def twoLayerNetwork(nVec: Int): MultiLayerNetwork = {
     new MultiLayerNetwork(
       List(
-        Affine.initByOne(nVec, nSample),
+        Affine.initByOne(nVec),
         Sigmoid(),
-        Affine.initByOne(nVec, nSample),
+        Affine.initByOne(nVec),
       )
     )
   }

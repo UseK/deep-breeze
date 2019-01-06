@@ -69,7 +69,7 @@ class Affine(var w: DenseMatrix[Double],
 }
 
 object Affine {
-  def initByOne(nVec: Int, nSample: Int): Affine = {
+  def initByOne(nVec: Int): Affine = {
     new Affine(
       DenseMatrix.ones[Double](nVec, nVec),
       DenseVector.zeros[Double](nVec)

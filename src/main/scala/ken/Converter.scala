@@ -26,7 +26,7 @@ object Converter {
     val nVec = x(0, ::).t.length
     println(nVec)
     println(encoder.characters.length)
-    val net = MultiLayerNetwork.twoLayerNetwork(nVec, 2)
+    val net = MultiLayerNetwork.twoLayerNetwork(nVec)
     net.learn(x, t, 10000, 0.000005)
   }
 

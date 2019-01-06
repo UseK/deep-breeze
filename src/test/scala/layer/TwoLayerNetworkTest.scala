@@ -22,7 +22,7 @@ class TwoLayerNetworkTest extends FunSuite {
   )
 
   test("backward") {
-    val net = MultiLayerNetwork.twoLayerNetwork(4, 2)
+    val net = MultiLayerNetwork.twoLayerNetwork(4)
 
     val firstLoss = net.loss(x, t)
     net.backward()
@@ -37,7 +37,7 @@ class TwoLayerNetworkTest extends FunSuite {
     assert(sum(secondLoss) > sum(thirdLoss))
   }
   test("learn") {
-    val net = MultiLayerNetwork.twoLayerNetwork(4, 2)
+    val net = MultiLayerNetwork.twoLayerNetwork(4)
     net.learn(x, t, 10000, 0.1)
     val expected = DenseMatrix(
       (-0.37807558581455547,  -1.5461798782345912,
@@ -48,7 +48,7 @@ class TwoLayerNetworkTest extends FunSuite {
     assert(net.predict(x) == expected)
   }
   test("learn2") {
-    val net = MultiLayerNetwork.twoLayerNetwork(4, 2)
+    val net = MultiLayerNetwork.twoLayerNetwork(4)
     net.learn(x2, t2, 100000, 1.0)
     val expected = DenseMatrix(
       (-2.717025033381218,  16.752136959563572,  4.565931421266416, -2.717025033381218),

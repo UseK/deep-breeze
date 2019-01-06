@@ -4,8 +4,8 @@ import breeze.linalg.DenseMatrix
 import org.scalatest.FunSuite
 
 class MultiLayerNetworkTest extends FunSuite {
-  val affineSigmoid = MultiLayerNetwork.affineSigmoid(4, 2)
-  val affineOnly = MultiLayerNetwork.affineOnly(4, 2)
+  val affineSigmoid = MultiLayerNetwork.affineSigmoid(4)
+  val affineOnly = MultiLayerNetwork.affineOnly(4)
   private val inputMatrix = DenseMatrix(
     (0.1, 0.2, 0.3, 0.4),
     (0.9, 0.8, 0.7, 0.6),
@@ -48,6 +48,6 @@ class MultiLayerNetworkTest extends FunSuite {
       (0.01, 0.04, 0.09, 0.16),
       (0.81, 0.64, 0.49, 0.36),
     )
-    val affineSigmoid = MultiLayerNetwork.affineSigmoid(4, 2)
+    val affineSigmoid = MultiLayerNetwork.affineSigmoid(4)
   }
 }
