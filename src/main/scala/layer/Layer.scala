@@ -100,6 +100,9 @@ object Affine {
       DenseVector.zeros[Double](nVecOutput)
     )
   }
+  def initByRandom(nVec: Int): Affine = {
+    initByRandom(nVec, nVec)
+  }
   def initByRandom(nVecInput: Int, nVecOutput: Int): Affine = {
     new Affine(
       DenseMatrix.rand[Double](nVecInput, nVecOutput),
