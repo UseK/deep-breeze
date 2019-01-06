@@ -94,6 +94,18 @@ object Affine {
       DenseVector.zeros[Double](nVec)
     )
   }
+  def initByOne(nVecInput: Int, nVecOutput: Int): Affine = {
+    new Affine(
+      DenseMatrix.ones[Double](nVecInput, nVecOutput),
+      DenseVector.zeros[Double](nVecOutput)
+    )
+  }
+  def initByRandom(nVecInput: Int, nVecOutput: Int): Affine = {
+    new Affine(
+      DenseMatrix.rand[Double](nVecInput, nVecOutput),
+      DenseVector.rand[Double](nVecOutput)
+    )
+  }
 }
 
 

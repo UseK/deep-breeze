@@ -32,9 +32,9 @@ class MultiLayerNetwork(val layers: List[Layer]) {
            ): Unit = {
     (1 to nIter).foreach { i =>
       val ls = loss(x, t)
-      if (isShowProgress) {
+      if (isShowProgress & i % 10 == 0) {
         println(i)
-        println(sum(ls))
+        println(sum(ls) / t.rows)
         println(max(ls))
         println(min(ls))
         println()
@@ -64,6 +64,18 @@ object MultiLayerNetwork {
         Affine.initByOne(nVec),
         Sigmoid(),
         Affine.initByOne(nVec),
+      )
+    )
+  }
+
+  def twoLayerNetwork(nVecInput: Int,
+                      nVecHidden: Int,
+                      nVecOutput: Int): MultiLayerNetwork = {
+    new MultiLayerNetwork(
+      List(
+        Affine.initByRandom(nVecInput, nVecHidden),
+        Sigmoid(),
+        Affine.initByRandom(nVecHidden, nVecOutput),
       )
     )
   }

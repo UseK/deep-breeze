@@ -5,7 +5,7 @@ import ken.Converter
 import nlp.Corpus
 
 object Hello extends Greeting with App {
-  Converter.run()
+  Converter.testWithSpiral()
 }
 
 

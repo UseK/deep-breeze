@@ -37,4 +37,16 @@ object Converter {
       (items(3), items(4), items(5))
     ).distinct
   }
+
+  def testWithSpiral(): Unit = {
+    def readCSV(pathname: String): DenseMatrix[Double] = {
+      val reader = CSVReader.open(new File(pathname))
+      val rows = reader.iterator.map {row => row.map(_.toDouble) }.toSeq
+      DenseMatrix(rows:_*)
+    }
+    val x = readCSV("data/spiral_x.csv")
+    val t = readCSV("data/spiral_t.csv")
+    val net = MultiLayerNetwork.twoLayerNetwork(x.cols, 10, t.cols)
+    net.learn(x, t, 50000, 1.0, isShowProgress=true)
+  }
 }
