@@ -39,6 +39,24 @@ object Sigmoid {
   def apply(): Sigmoid = new Sigmoid()
 }
 
+class ReLU extends Layer {
+  var maskCache: Option[DenseMatrix[T]] = None
+  override def forward(x: DenseMatrix[T]): DenseMatrix[T] = {
+    val mask = x.map(v => if (v >= 0) {1.0} else {0.0})
+    maskCache = Option(mask)
+    x *:* mask
+  }
+
+  override def backward(dOut: DenseMatrix[T]): DenseMatrix[T] = {
+    dOut *:* maskCache.get
+  }
+
+  override def showParams(): Unit = {}
+}
+
+object ReLU {
+  def apply(): ReLU = new ReLU()
+}
 
 class Affine(var w: DenseMatrix[Double],
              var b: DenseVector[Double]) extends Layer with ParamUpdatable {
@@ -67,6 +85,7 @@ class Affine(var w: DenseMatrix[Double],
     b -= diffB.get *:* learningRate
   }
 }
+
 
 object Affine {
   def initByOne(nVec: Int): Affine = {

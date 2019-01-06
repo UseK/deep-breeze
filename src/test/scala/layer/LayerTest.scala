@@ -43,6 +43,40 @@ class SigmoidTest extends FunSuite {
   }
 }
 
+class ReLUText extends FunSuite {
+  test("forward") {
+    val relu = new ReLU()
+    val result = relu.forward(DenseMatrix(
+      (1.0, 2.0, -3.0),
+      (-4.0, 5.0, 6.0)
+    ))
+    val expected = DenseMatrix(
+      (1.0, 2.0, 0.0),
+      (0.0, 5.0, 6.0)
+    )
+    assert(result == expected)
+  }
+
+  test("backward") {
+    val relu = new ReLU()
+    relu.forward(DenseMatrix(
+      (1.0, 2.0, -3.0),
+      (-4.0, 5.0, 6.0)
+    ))
+    val result = relu.backward(DenseMatrix(
+        (1.0, 5.0, 3.0),
+        (4.0, 2.0, 6.0)
+      )
+    )
+    val expected = DenseMatrix(
+      (1.0, 5.0, 0.0),
+      (0.0, 2.0, 6.0)
+    )
+    assert(result == expected)
+  }
+}
+
+
 class AffineTest extends FunSuite {
   test("forward") {
     val src = DenseMatrix(
