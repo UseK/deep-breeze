@@ -13,17 +13,17 @@ object Main extends App {
 object TensorFlowExample {
   def sessionRun(): Unit = {
     val x = tf.placeholder[Float](shape=Shape(1))
-    val w = tf.variable[Float]("w", Shape(1), ConstantInitializer(Tensor(2.0f)))
+    val w = tf.variable[Float]("w", Shape(1), ConstantInitializer(Tensor(2.0f, 2.0f)))
     val z = x + w
     val session = Session()
     session.run(targets = tf.globalVariablesInitializer())
     val result = session.run(
-      targets = z,
-      feeds = Map(x -> Tensor(0.6f)))
-    println(result)
+      fetches = z,
+      feeds = Map(x -> Tensor(0.6f, 1.2f)))
+    println(result.summarize())
   }
 
-  def helloTensorFlow = {
+  def helloTensorFlow() = {
     val t1 = Tensor(1.2, 4.5)
     val t2 = Tensor(-0.2, 1.1)
     println(t1)
