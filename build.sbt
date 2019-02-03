@@ -31,3 +31,4 @@ resolvers += "Sonatype Releases" at "https://oss.sonatype.org/content/repositori
 
 libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "1.3.5"
 
+libraryDependencies += "org.platanios" % "tensorflow_2.12" % "0.4.1" classifier "darwin-cpu-x86_64"
