@@ -1,10 +1,10 @@
-package example
+package main
 
 import breeze.linalg._
 import ken.Converter
 import nlp.Corpus
 
-object Hello extends Greeting with App {
+object Main extends Greeting with App {
   Converter.run()
 }
 
